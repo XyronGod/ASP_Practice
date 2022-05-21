@@ -1,4 +1,5 @@
 ﻿using ASP_Practice.Data.Interfaces;
+using ASP_PRCTC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -20,9 +21,11 @@ namespace ASP_PRCTC.Controllers
         //Метод, который возвращает HTML-страницу
         public ViewResult  List()
         {
-            ViewBag.Category = "Some New";
-            var cars = _AllCars.Cars;
-            return View(cars);
+            ViewBag.Title = "Страница с автомобилями";
+            CarsListViewModel obj = new CarsListViewModel();
+            obj.AllCars = _AllCars.Cars;
+            obj.CurrCategory = "Автомобили";
+            return View(obj);
         }
     }
 }
