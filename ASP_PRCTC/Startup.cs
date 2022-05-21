@@ -1,3 +1,5 @@
+using ASP_Practice.Data.Interfaces;
+using ASP_Practice.Data.Mocks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -19,7 +21,11 @@ namespace ASP_PRCTC
         public void ConfigureServices(IServiceCollection services)
         {
             // Подключение поддержки установленного плагина MVC (NuGet)
-            services.AddMvc();
+            //options => options.EnableEndpointRouting = false Для работы функции app.UseMvcWithDefaultRoute();
+            services.AddMvc(options => options.EnableEndpointRouting = false);
+            
+            services.AddTransient<IAllCars, MockCars>();
+            services.AddTransient<ICarsCategory, MockCategory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -29,7 +35,7 @@ namespace ASP_PRCTC
             app.UseDeveloperExceptionPage();
             //Отоброжение кода страниц
             app.UseStatusCodePages();
-
+            //Статические файлы (css,картинки и т.д.)
             app.UseStaticFiles();
             //Использование Url-Адреса, который вызывает контроллер по умолчанию
             app.UseMvcWithDefaultRoute();
